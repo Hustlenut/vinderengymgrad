@@ -28,10 +28,11 @@ nav {
 nav ul {
   list-style: none;
   padding: 0;
+  transform: translateY(-10px);
 }
 
 nav ul li {
-  display: inline;  
+  display: inline; 
 }
 
 .nav-container nav ul li:nth-child(1),
