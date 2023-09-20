@@ -2,6 +2,8 @@ import "./App.css";
 import { Routes, Route, Link, Navigate } from "react-router-dom";
 import Registration from "./Components/registration";
 import Logo from "./Components/theLogo";
+import { Login } from "./Components/login";
+import Admin from "./Components/admin";
 
 function App() {
   const navigateToVinderen = () => {
@@ -23,9 +25,9 @@ function App() {
               <li>
                 <Link to="/registration">Registrering</Link>
               </li>
-              {/*<li>
-                <Link to="/other">Annet</Link>
-              </li>*/}
+              <li>
+                <Link to="/login">Logg inn</Link>
+              </li>
             </ul>
           </nav>
         </div>
@@ -34,7 +36,8 @@ function App() {
       <div>
         <Routes>
           <Route path="/" element={<Navigate to="/registration" />} />
-          {/*<Route path="other" element={<h1>Hello other</h1>} />*/}
+          <Route path="login" element={<Login />} />
+          <Route path="admin" element={<Admin />} />
           <Route path="registration" element={<Registration />} />
           <Route path="*" element={<h1>Error 404...</h1>} />
         </Routes>
