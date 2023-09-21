@@ -1,55 +1,38 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./login.css";
+import ILoginCredentials from "../Services/Interfaces/ILoginCredentials";
+import POSTLoginCredentials from "../Services/HTTPrequests/POST/POSTLoginCredentials";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [userRole, setUserRole] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // Create a JSON object with the email and password
-    const data = {
+    const data: ILoginCredentials = {
       email: email,
       password: password
-    };
-
-    try {
-      const response = await fetch("https://localhost:7070/api/Auth/Login", {
-        method: "POST",
-        headers: {
-          "Accept": "*/*",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data), //converts JS object to
-      });
-
-      if (response.ok) {
-        // Handle a successful response (e.g., redirect or display a success message)
-        console.log("Success!!");
-        const responseBody = await response.json(); //To obtain the JS object
-        const token = responseBody.token;
-
-        localStorage.setItem('authToken', token);
-
-        const decodedToken = JSON.parse(atob(token.split('.')[1])); //Another parsing is required, since the token itself is in JSON format
-        const userRole = decodedToken.roles;
-        //TODO: Restrict access through direct access to /admin 
-        if(userRole === "Admin") {
-            navigate('/admin');
-        }else {
-            navigate('/Login');
-        }
-        
-        
-      } else {
-        // Handle errors (e.g., display an error message)
-      }
-    } catch (error) {
-      // Handle network errors or other issues
     }
+
+    const role = await POSTLoginCredentials(data);
+    if (role !== undefined) {
+      setUserRole(role);
+
+      if(userRole === "Admin") {
+        navigate("/admin");
+        console.log("Success!!")
+      }else if(userRole === "Student") {
+        navigate("/student");
+      }
+    } else {
+      console.log("No user roles were found!")
+    }
+   
   };
 
   return (

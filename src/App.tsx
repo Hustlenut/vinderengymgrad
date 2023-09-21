@@ -1,47 +1,36 @@
 import "./App.css";
 import { Routes, Route, Link, Navigate } from "react-router-dom";
-import Registration from "./Components/registration";
-import Logo from "./Components/theLogo";
-import { Login } from "./Components/login";
-import Admin from "./Components/admin";
+import Navbar from "./Components/navbar";
+import ProtectedRoute from "./Components/protectedRoute";
+import Admin from "./Components/Pages/admin";
+import { Login } from "./Components/Pages/login";
+import Registration from "./Components/Pages/registration";
 
 function App() {
-  const navigateToVinderen = () => {
-    window.location.href = "https://vinderengym.no/";
-  };
-
   return (
     <>
-      <div className="grid vinderen-BG">
+      <header>
+        <Navbar />
+      </header>
+      <main>
         <div>
-          <button onClick={navigateToVinderen} className="logo">
-            {<Logo />}
-          </button>
+          <Routes>
+            <Route path="/" element={<Navigate to="/registration" />} />
+            <Route path="login" element={<Login />} />
+            <Route
+              path="admin"
+              element={
+                <ProtectedRoute user={<Admin />} redirectPath={""}>
+                  <Admin />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="registration" element={<Registration />} />
+            <Route path="*" element={<h1>Error 404...</h1>} />
+          </Routes>
         </div>
-
-        <div className="nav-container">
-          <nav>
-            <ul>
-              <li>
-                <Link to="/registration">Registrering</Link>
-              </li>
-              <li>
-                <Link to="/login">Logg inn</Link>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </div>
-
-      <div>
-        <Routes>
-          <Route path="/" element={<Navigate to="/registration" />} />
-          <Route path="login" element={<Login />} />
-          <Route path="admin" element={<Admin />} />
-          <Route path="registration" element={<Registration />} />
-          <Route path="*" element={<h1>Error 404...</h1>} />
-        </Routes>
-      </div>
+      </main>
+      <footer></footer>
     </>
   );
 }
