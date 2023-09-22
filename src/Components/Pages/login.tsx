@@ -20,14 +20,17 @@ function Login() {
     }
 
     const role = await POSTLoginCredentials(data);
+    //The moment the method above returns, authProvider will be updated.
     if (role !== undefined) {
       setUserRole(role);
 
       if(userRole === "Admin") {
         navigate("/admin");
-        console.log("Success!!")
+        window.location.reload(); //Because AuthProvider is one re-render away from showing the page.
+        console.log("Success!!");
       }else if(userRole === "Student") {
         navigate("/student");
+        window.location.reload();
       }
     } else {
       console.log("No user roles were found!")
