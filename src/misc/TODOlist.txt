@@ -1,0 +1,1 @@
+- Make documentation for each folder, documenting the purpose in each of them
