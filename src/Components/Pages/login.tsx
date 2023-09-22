@@ -7,7 +7,6 @@ import POSTLoginCredentials from "../Services/HTTPrequests/POST/POSTLoginCredent
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [userRole, setUserRole] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -18,23 +17,21 @@ function Login() {
       email: email,
       password: password
     }
+    //!!! This cannot be async!
+    const rolePromise = POSTLoginCredentials(data);
 
-    const role = await POSTLoginCredentials(data);
-    //The moment the method above returns, authProvider will be updated.
-    if (role !== undefined) {
-      setUserRole(role);
-
-      if(userRole === "Admin") {
+    rolePromise.then((role) =>{
+      if(role === "Admin") {
         navigate("/admin");
-        window.location.reload(); //Because AuthProvider is one re-render away from showing the page.
-        console.log("Success!!");
-      }else if(userRole === "Student") {
-        navigate("/student");
         window.location.reload();
+        console.log("Success!!");
+      } else if (role === "Student") {
+        navigate("/student");
       }
-    } else {
-      console.log("No user roles were found!")
-    }
+    })
+    .catch((error) => {
+      console.error("Login failed", error);
+    });
    
   };
 
