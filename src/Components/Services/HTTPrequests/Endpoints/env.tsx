@@ -14,14 +14,19 @@ const NodeENV = () => {
     }
 }
 
-
-const API_URL = {
+//Development environment
+const DEV_API_URL = {
     DEV_POST_authLogin: () => {
-      return (process.env.REACT_APP_DEV_AUTH_LOGIN) || ""; //Makes it return a valid string or an empty string instead of "undefined"
+      return process.env.REACT_APP_DEV_AUTH_LOGIN || ""; //Makes it return a valid string or an empty string instead of "undefined"
     },
 
+}
 
+//Production environment
+const PRO_API_URL = {
+    PRO_POST_authLogin: () => {
+        return process.env.REACT_APP_PRO_AUTH_LOGIN || "";
+    }
+}
 
-} 
-
-export { API_URL, NodeENV }
+export { PRO_API_URL, DEV_API_URL, NodeENV }

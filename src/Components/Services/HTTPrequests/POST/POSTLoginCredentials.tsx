@@ -1,17 +1,23 @@
 import ILoginCredentials from "../../Interfaces/ILoginCredentials";
-import { API_URL, NodeENV } from "../Endpoints/env";
+import { PRO_API_URL, DEV_API_URL, NodeENV } from "../Endpoints/env";
 
 export default function POSTLoginCredentials(data: ILoginCredentials) {
   const environment = NodeENV();
-  var DEV_POST_authLogin: string = "";
+  var envInUse_authLogin: string = "";
 
   if(environment === "development") {
-    DEV_POST_authLogin = API_URL.DEV_POST_authLogin();
+    var DEV_POST_authLogin = DEV_API_URL.DEV_POST_authLogin();
+    envInUse_authLogin = DEV_POST_authLogin;
+  }else if(environment === "production") {
+    var PRO_POST_authLogin = PRO_API_URL.PRO_POST_authLogin();
+    envInUse_authLogin = PRO_POST_authLogin;
+  }else{
+    return console.error("No environment was found")
   }
 
   // Create a promise for the fetch request
   return new Promise<string>((resolve, reject) => {
-    fetch(DEV_POST_authLogin, {
+    fetch(envInUse_authLogin, {
       method: "POST",
       headers: {
         Accept: "*/*",
