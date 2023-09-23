@@ -18,9 +18,9 @@ function App() {
           <div>
             <Routes>
               <Route path="/" element={<Navigate to="/registration" />} />
-              <Route path="login" element={<Login />} />
-              <Route path="registration" element={<Registration />} />
-              <Route path="admin" element={auth === "Admin" ? <Admin /> : <Navigate to="/admin" />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/registration" element={<Registration />} />
+              <Route path="/admin" element={auth === "Admin" ? <Admin /> : <Registration />} />
               <Route path="*" element={<h1>Error 404...</h1>} />
             </Routes>
           </div>
