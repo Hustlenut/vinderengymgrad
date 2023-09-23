@@ -20,7 +20,7 @@ function App() {
               <Route path="/" element={<Navigate to="/registration" />} />
               <Route path="login" element={<Login />} />
               <Route path="registration" element={<Registration />} />
-              <Route path="admin" element={auth === "Admin" ? <Admin /> : <Navigate to="admin" />} />
+              <Route path="admin" element={auth === "Admin" ? <Admin /> : <Navigate to="/admin" />} />
               <Route path="*" element={<h1>Error 404...</h1>} />
             </Routes>
           </div>
