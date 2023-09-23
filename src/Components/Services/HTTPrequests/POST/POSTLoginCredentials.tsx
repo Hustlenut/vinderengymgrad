@@ -12,7 +12,7 @@ export default function POSTLoginCredentials(data: ILoginCredentials) {
     var PRO_POST_authLogin = PRO_API_URL.PRO_POST_authLogin();
     envInUse_authLogin = PRO_POST_authLogin;
   }else{
-    return console.error("No environment was found")
+    return Promise.reject(new Error("No environment was found"));
   }
 
   // Create a promise for the fetch request

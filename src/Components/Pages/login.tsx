@@ -20,7 +20,7 @@ function Login() {
     //!!! This cannot be async!
     const rolePromise = POSTLoginCredentials(data);
 
-    rolePromise.then((role) =>{
+    rolePromise.then((role: string) =>{
       if(role === "Admin") {
         navigate("/admin");
         window.location.reload();
@@ -29,7 +29,7 @@ function Login() {
         navigate("/student");
       }
     })
-    .catch((error) => {
+    .catch((error: any) => {
       console.error("Login failed", error);
     });
    
