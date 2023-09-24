@@ -40,6 +40,7 @@ function Login() {
       <div className="background">
         <form onSubmit={handleSubmit} className="flex-container">
           <h2>Logg inn med din e-post</h2>
+          <h5 style={{color: "GrayText"}}>Midlertidig kun for administratorer</h5>
           <div className="flex-item">
             <h4 style={{ marginBottom: "-0.1em" }}>E-post</h4>
             <input
