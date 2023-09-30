@@ -27,13 +27,16 @@ export default function POSTLoginCredentials(data: ILoginCredentials) {
     })
       .then((response) => {
         if (response.ok) {
+          console.log("OK!");
           return response.json();
         } else {
-          console.log("POST request not successful");
-          reject("POST request failed");
+          console.log("POST request not successful ");
+          return response.json().then(err => {
+            reject(err); // rejecting with the resolved error object.
+         });         
         }
       })
-      .then((responseBody) => {
+      .then((responseBody) => { //the responseBody is an JSON object at this point...
         const token = responseBody.token;
         localStorage.setItem("authToken", token);
         const decodedToken = JSON.parse(atob(token.split(".")[1]));
